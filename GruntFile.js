@@ -5,21 +5,20 @@ module.exports = function (grunt) {
     pkg: grunt.file.readJSON('package.json'),
 
     typescript: {
-      src: {
-        src: ['src/**/*.ts'],
-        dest: 'js',
+      serversrc: {
+        src: ['src/server/**/*.ts'],
+        dest: 'js/server',
         options: {
           module: 'commonjs',
           target: 'es5',
           sourceMap: true,
           declaration: false,
-          experimentalDecorators: true,
-          watch: true
+          experimentalDecorators: true
         }
       },
       test: {
         src: ['test/**/*.ts'],
-        dest: 'js-test',
+        dest: 'js/test',
         options: {
           module: 'commonjs', //or
           target: 'es5', //or es3
@@ -37,7 +36,13 @@ module.exports = function (grunt) {
           config: 'tsd.json'
         }
       }
-    }
+    },
+
+    clean: [
+      'js/server',
+      'js/web-client',
+      'js/test'
+    ]
   });
 
   grunt.loadNpmTasks('grunt-typescript');
@@ -46,8 +51,9 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-nodemon');
   grunt.loadNpmTasks('grunt-tsd');
+  grunt.loadNpmTasks('grunt-contrib-clean');
 
-  grunt.registerTask('build', ['tsd', 'typescript:src']);
+  grunt.registerTask('build', ['tsd', 'typescript:serversrc']);
   //grunt.registerTask('test', ['typescript:test', 'node_mocha:test']);
   //grunt.registerTask('coverage', ['typescript:test', 'node_mocha:coverage', 'http-server:coverage']);
   grunt.registerTask('run', ['nodemon']);
