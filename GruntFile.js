@@ -42,7 +42,14 @@ module.exports = function (grunt) {
       'js/server',
       'js/web-client',
       'js/test'
-    ]
+    ],
+
+    nodemon: {
+      dev: {
+        script: 'js/server/hello.js'
+      }
+    },
+
   });
 
   grunt.loadNpmTasks('grunt-typescript');
